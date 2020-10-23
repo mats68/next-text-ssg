@@ -5,6 +5,7 @@ export interface ILink {
     fragment?: string,
     children?: ILinks,
     numbering?: string,
+    indent?: number,
 }
 export interface ILinks extends Array<ILink> { }
 
@@ -93,3 +94,18 @@ export const AppLinks: ILinks = [
         label: 'API',
     },
 ]
+
+export const traverseLinks = (links: ILinks, pLink?: ILink) => {
+    links.forEach((l) => {
+      if (pLink) {
+        if (!l.link) l.link = pLink.link;
+        l.numbering = pLink.numbering + "." + l.id.toString().split("").pop();
+        l.indent = pLink.indent + 1;
+      } else {
+        l.numbering = l.id.toString();
+        l.indent = 0;
+      }
+      if (l.children) traverseLinks(l.children, l);
+    });
+  };
+  

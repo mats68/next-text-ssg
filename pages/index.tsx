@@ -1,7 +1,14 @@
-import Layout from '../components/Layout'
+import { useEffect } from "react";
+import Layout from "../components/Layout";
+import {
+  AppLinks,
+  traverseLinks,
+  ILink,
+  ILinks,
+} from "../components/config/links";
 
 export default function Home() {
-  return (
-    <Layout>Hello</Layout>
-  );
+  traverseLinks(AppLinks);
+
+  return <Layout>Hello</Layout>;
 }

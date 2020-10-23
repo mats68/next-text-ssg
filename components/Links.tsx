@@ -1,19 +1,23 @@
-import { link } from "fs";
-import { useEffect } from "react";
-import { ILink, ILinks } from "./config/links";
+import { ILink } from "./config/links";
 import Link from "next/link";
+import styles from "../styles/Links.module.css";
 
 export interface ILinkProps {
   link: ILink;
 }
 
 export function Links({ link }: ILinkProps) {
+  const style = {
+     marginLeft: ((link.indent + 1)  * 5).toString() + 'px' 
+  }
   return (
-    <li>
-      <Link href={link.link}>
-        <a>{link.label}</a>
+    <div>
+      <Link href={link.link || ""}>
+        <a className={styles.link} style={style}>
+          {link.numbering} {link.label}
+        </a>
       </Link>
-      {link.children && link.children.map((l) => <Links link={l} />)}
-    </li>
+      {link.children && link.children.map((l) => <Links key={l.id} link={l} />)}
+    </div>
   );
 }
