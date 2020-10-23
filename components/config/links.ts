@@ -9,15 +9,15 @@ export interface ILink {
 }
 export interface ILinks extends Array<ILink> { }
 
-export const AppLinks: ILinks = [
+const _appLinks: ILinks = [
     {
         id: 1,
-        link: '',
+        link: '/',
         label: 'Features',
     },
     {
         id: 2,
-        link: 'installation',
+        link: '/installation',
         label: 'Installation',
         children: [
             {
@@ -95,7 +95,7 @@ export const AppLinks: ILinks = [
     },
 ]
 
-export const traverseLinks = (links: ILinks, pLink?: ILink) => {
+const traverseLinks = (links: ILinks, pLink?: ILink) => {
     links.forEach((l) => {
       if (pLink) {
         if (!l.link) l.link = pLink.link;
@@ -109,3 +109,7 @@ export const traverseLinks = (links: ILinks, pLink?: ILink) => {
     });
   };
   
+export const AppLinks = (): ILinks => {
+    if (!_appLinks[0].numbering) traverseLinks(_appLinks)
+    return _appLinks
+}
